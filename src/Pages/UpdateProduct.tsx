@@ -9,12 +9,12 @@ const UpdateProduct = () => {
     img: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Assuming the product ID is stored in product.id
     fetch(`http://localhost:3001/api/storage/${product.id}`, {
@@ -38,7 +38,7 @@ const UpdateProduct = () => {
   const styles = {
     form: {
       display: "flex",
-      flexDirection: "column",
+      flexDirection: "column" as const,
       width: "100%", // Make form width 100%
       maxWidth: "300px", // Max width of form
       margin: "10px auto", // Center form and add margin on top

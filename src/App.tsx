@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import UserDataForm from "./Pages//UserDataForm"; // Ensure this path is correct
 import Signup from "./Signup";
@@ -8,7 +8,6 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState({ name: "", email: "" });
   const [currentView, setCurrentView] = useState("login");
-  const [title, setTitle] = useState("");
   const fullTitle = "Shopify";
 
   // useEffect(() => {
@@ -20,7 +19,11 @@ function App() {
   //   }
   // }, [title, fullTitle]);
 
-  const handleLoginSuccess = (isLoggedIn, name, email) => {
+  const handleLoginSuccess = (
+    isLoggedIn: boolean,
+    name: string,
+    email: string
+  ) => {
     setIsAuthenticated(isLoggedIn);
     setCurrentUser({ name, email });
     setCurrentView("home"); // Change view to home upon successful login
@@ -60,7 +63,7 @@ function App() {
               fill="none"
               role="img"
               viewBox="0 0 56 64"
-              class="md:hidden block h-[48px] mx-auto"
+              className="md:hidden block h-[48px] mx-auto"
               height="64"
               data-component-name="shopify-logo"
             >
@@ -90,20 +93,21 @@ function App() {
             className="text-center text-section-dark-text pt-8 pb-6"
             data-mode="dark"
             data-component-name="heading-group"
-            style={{
-              justifyContent: "center",
-              justifyItems: "center",
-              textAlign: "center",
-              color: "rgba(255, 255, 255, 1)",
-              paddingTop: "2rem",
-              paddingBottom: "1.5rem",
-            }}
+            style={
+              {
+                justifyContent: "center",
+                justifyItems: "center",
+                textAlign: "center",
+                color: "rgba(255, 255, 255, 1)",
+                paddingTop: "2rem",
+                paddingBottom: "1.5rem",
+              } as React.CSSProperties
+            }
           >
             <h1
               className="richtext text-t1"
               style={{
-                "--tw-text-opacity": "1",
-                color: "rgba(255, 255, 255, var(--tw-text-opacity))",
+                color: "rgba(255, 255, 255, 1)",
               }}
             >
               Build your own ecommerce <br />
@@ -112,8 +116,7 @@ function App() {
             <p
               className="richtext text-body-lg pt-md"
               style={{
-                "--tw-text-opacity": "1",
-                color: "rgba(255, 255, 255, var(--tw-text-opacity))",
+                color: "rgba(255, 255, 255, 1)",
                 paddingTop: "1rem",
               }}
             >

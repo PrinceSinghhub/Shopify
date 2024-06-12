@@ -8,31 +8,35 @@ interface Product {
   img: string;
 }
 
-const DeleteProduct = () => {
+const DeleteProduct: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
 
-  const fetchProducts = () => {
-    fetch("http://localhost:3001/api/storage")
-      .then((response) => response.json())
-      .then((data) => setProducts(data))
-      .catch((error) => console.error("Error fetching products:", error));
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/api/storage");
+      const data: Product[] = await response.json();
+      setProducts(data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
   };
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
-  const deleteProduct = (id: number) => {
-    fetch(`http://localhost:3001/api/storage/${id}`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        if (response.ok) {
-          // Fetch the updated list of products after deletion
-          fetchProducts();
-        }
-      })
-      .catch((error) => console.error("Error deleting product:", error));
+  const deleteProduct = async (id: number) => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/storage/${id}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        // Fetch the updated list of products after deletion
+        fetchProducts();
+      }
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
   };
 
   return (

@@ -5,7 +5,7 @@ import axios from "axios";
 const styles = {
   form: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "column" as const,
     width: "100%", // Make form width 100%
     maxWidth: "300px", // Max width of form
     margin: "10px auto", // Center form and add margin on top
@@ -39,7 +39,12 @@ const SearchProduct = () => {
   // State for storing the product ID input by the user
   const [productId, setProductId] = useState("");
   // State for storing the fetched product data
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState<{
+    img: string;
+    name: string;
+    detail: string;
+    price: number;
+  } | null>(null);
   // State for storing any error messages
   const [error, setError] = useState("");
 
@@ -113,7 +118,7 @@ const SearchProduct = () => {
             }}
           >
             <h4>
-              ID: {product.id} - {product.name}
+              ID: {product.name} - {product.name}
             </h4>
             <p>{product.detail}</p>
             <p>Price: ${product.price}</p>

@@ -1,65 +1,86 @@
 import React, { useState } from "react";
 
-const AddProductForm = ({ onAdd }) => {
-  const [product, setProduct] = useState({
-    id: "", // Initialize id as an empty string to allow user input
+// interface Product {
+//   id: string;
+//   name: string;
+//   detail: string;
+//   price: string; // Keeping price as string to match the initial state and input handling
+//   img: string;
+// }
+
+// In AddProductFormProps, change the type of onAdd to accept ProductType instead of Product
+interface ProductType {
+  id: string;
+  name: string;
+  detail?: string; // Optional to align with Product interface having 'detail' instead of 'description'
+  price: number; // This should be number to match ProductType in handleAddProduct
+  img: string;
+}
+
+interface AddProductFormProps {
+  onAdd: (product: ProductType) => void;
+}
+
+const AddProductForm: React.FC<AddProductFormProps> = ({ onAdd }) => {
+  // Ensure the rest of AddProductForm uses ProductType for consistency
+  const [product, setProduct] = useState<ProductType>({
+    id: "",
     name: "",
-    detail: "",
-    price: "",
+    detail: "", // Use 'detail' to match ProductType
+    price: 0, // Initialize as 0, handle as number
     img: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setProduct((prevProduct) => ({
       ...prevProduct,
-      [name]: name === "price" ? parseFloat(value) || "" : value,
+      [name]: name === "price" ? Number(value) || 0 : value, // Convert price to number, default to 0 if conversion fails
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onAdd(product); // Call onAdd with the product, including the manually entered id
-    setProduct({ id: "", name: "", detail: "", price: "", img: "" }); // Reset form after submission
+  // Inside AddProductForm component
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const productData: ProductType = {
+      ...product,
+      price: Number(product.price), // Convert price to number
+    };
+    onAdd(productData);
   };
 
-  // Updated CSS styles with the same properties as the previous components
   const styles = {
     form: {
       display: "flex",
-      flexDirection: "column",
-      width: "100%", // Make form width 100%
-      maxWidth: "300px", // Max width of form
-      margin: "10px auto", // Center form and add margin on top
+      flexDirection: "column" as const, // Use 'as const' to assert specific string literal types
+      width: "100%",
+      maxWidth: "300px",
+      margin: "10px auto",
     },
     input: {
       marginBottom: "10px",
       padding: "8px",
       borderRadius: "4px",
       border: "1px solid #ccc",
-      backgroundColor: "white", // Input background color set to white
-      color: "black", // Input text color set to black
-      width: "calc(100% - 16px)", // Adjust width to ensure padding doesn't extend input
-      "::placeholder": {
-        // Placeholder style
-        color: "black", // Placeholder text color set to black
-      },
+      backgroundColor: "white",
+      color: "black",
+      width: "calc(100% - 16px)",
     },
     button: {
       padding: "10px",
       borderRadius: "4px",
       border: "none",
-      backgroundColor: "white", // Button background color set to white
-      color: "black", // Button text color set to black
+      backgroundColor: "white",
+      color: "black",
       cursor: "pointer",
-      width: "100%", // Button takes full width of the form
+      width: "100%",
     },
   };
 
   return (
     <form onSubmit={handleSubmit} style={styles.form}>
       <input
-        type="number"
+        type="text" // Changed to text to handle the string type of ID
         name="id"
         value={product.id}
         onChange={handleChange}
@@ -86,9 +107,9 @@ const AddProductForm = ({ onAdd }) => {
         style={styles.input}
       />
       <input
-        type="number"
+        type="text" // Changed to text to correctly handle the string type of price
         name="price"
-        value={product.price.toString()}
+        value={product.price}
         onChange={handleChange}
         placeholder="Price"
         required

@@ -14,7 +14,7 @@ async function main() {
     await client.connect();
     console.log("Connected successfully to server");
 
-    const db = client.db(dbName);
+    client.db(dbName);
     // You can now interact with the db object for CRUD operations
   } catch (err) {
     console.error(err);

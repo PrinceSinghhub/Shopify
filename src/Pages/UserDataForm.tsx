@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const UserDataForm = ({ onLoginSuccess }) => {
+const UserDataForm = ({
+  onLoginSuccess,
+}: {
+  onLoginSuccess: (success: boolean, name: string, email: string) => void;
+}) => {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
   const [showError, setShowError] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserData((prevState) => ({
       ...prevState,
@@ -16,7 +20,7 @@ const UserDataForm = ({ onLoginSuccess }) => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     setShowError(false); // Reset error state on new submission
 
@@ -46,7 +50,7 @@ const UserDataForm = ({ onLoginSuccess }) => {
   const styles = {
     form: {
       display: "flex",
-      flexDirection: "column",
+      flexDirection: "column" as const,
       width: "100%", // Make form width 100%
       maxWidth: "300px", // Max width of form
       margin: "10px auto", // Center form and add margin on top

@@ -10,7 +10,7 @@ const Signup = () => {
   const styles = {
     form: {
       display: "flex",
-      flexDirection: "column",
+      flexDirection: "column" as const,
       width: "100%", // Make form width 100%
       maxWidth: "300px", // Max width of form
       margin: "10px auto", // Center form and add margin on top
@@ -39,9 +39,12 @@ const Signup = () => {
     },
   };
 
-  const handleInputChange = (e, setter) => setter(e.target.value);
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setter: React.Dispatch<React.SetStateAction<string>>
+  ) => setter(e.target.value);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     try {
       const response = await fetch("http://localhost:3000/register", {

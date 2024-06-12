@@ -17,22 +17,28 @@ const LoginHomePage: React.FC<LoginHomePageProps> = ({ Name, Email }) => {
   const [showDeleteProduct, setShowDeleteProduct] = useState(false);
   const [showSearchProduct, setShowSearchProduct] = useState(false); // State for SearchProduct visibility
 
-  const handleAddProduct = (product) => {
-    fetch("http://localhost:3001/api/storage", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(product),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Product added:", data);
-        setShowAddForm(false);
-      })
-      .catch((error) => {
-        console.error("Error adding product:", error);
+  interface ProductType {
+    id: string; // Adjusted to match the expected type of 'Product'
+    name: string;
+    price: number;
+    description?: string;
+  }
+
+  const handleAddProduct = async (product: ProductType) => {
+    try {
+      const response = await fetch("http://localhost:3001/api/storage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(product),
       });
+      const data = await response.json();
+      console.log("Product added:", data);
+      setShowAddForm(false);
+    } catch (error) {
+      console.error("Error adding product:", error);
+    }
   };
 
   return (
@@ -42,20 +48,21 @@ const LoginHomePage: React.FC<LoginHomePageProps> = ({ Name, Email }) => {
           className="text-center text-section-dark-text pt-8 pb-6"
           data-mode="dark"
           data-component-name="heading-group"
-          style={{
-            justifyContent: "center",
-            justifyItems: "center",
-            textAlign: "center",
-            color: "rgba(255, 255, 255, 1)",
-            paddingTop: "2rem",
-            paddingBottom: "1.5rem",
-          }}
+          style={
+            {
+              justifyContent: "center",
+              justifyItems: "center",
+              textAlign: "center",
+              color: "rgba(255, 255, 255, 1)",
+              paddingTop: "2rem",
+              paddingBottom: "1.5rem",
+            } as React.CSSProperties
+          }
         >
           <h1
             className="richtext text-t1"
             style={{
-              "--tw-text-opacity": "1",
-              color: "rgba(255, 255, 255, var(--tw-text-opacity))",
+              color: "rgba(255, 255, 255, 1)",
             }}
           >
             Build your own Ecommerce <br />
@@ -66,11 +73,12 @@ const LoginHomePage: React.FC<LoginHomePageProps> = ({ Name, Email }) => {
             <p>User ID: {Email}</p>
             <p
               className="richtext text-body-lg pt-md"
-              style={{
-                "--tw-text-opacity": "1",
-                color: "rgba(255, 255, 255, var(--tw-text-opacity))",
-                // paddingTop: "1rem",
-              }}
+              style={
+                {
+                  "--tw-text-opacity": "1",
+                  color: "rgba(255, 255, 255, var(--tw-text-opacity))",
+                } as React.CSSProperties
+              }
             >
               Shopify is trusted by millions of businesses worldwide
             </p>

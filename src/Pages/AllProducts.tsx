@@ -9,15 +9,18 @@ interface Product {
   img: string;
 }
 
-const AllProducts = () => {
+const AllProducts: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
 
   // Function to fetch products from the API
-  const fetchProducts = () => {
-    fetch("http://localhost:3001/api/storage")
-      .then((response) => response.json())
-      .then((data) => setProducts(data))
-      .catch((error) => console.error("Error fetching products:", error));
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/api/storage");
+      const data: Product[] = await response.json();
+      setProducts(data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
   };
 
   // Fetch products from the API when the component mounts

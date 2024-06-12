@@ -22,7 +22,7 @@ const UserDataForm = () => {
   const [errorMessage, setErrorMessage] = useState(""); // Store validation or login error messages
   const [userName, setUserName] = useState("");
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserData((prevState) => ({
       ...prevState,
@@ -30,7 +30,7 @@ const UserDataForm = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowError(false); // Reset error state on new submission
 
@@ -38,7 +38,7 @@ const UserDataForm = () => {
     const validationResult = loginSchema.safeParse(userData);
     if (!validationResult.success) {
       // If validation fails, show the first error message
-      setErrorMessage(validationResult.error.errors[0].message);
+      setErrorMessage(validationResult.error.errors[0].toString());
       setShowError(true);
       return; // Stop the form submission
     }
@@ -66,9 +66,24 @@ const UserDataForm = () => {
         );
       }
     } catch (error) {
-      console.error("Login error:", error);
-      setShowError(true);
-      setErrorMessage("Login error: " + error.message);
+      if (axios.isAxiosError(error)) {
+        // Now TypeScript knows `error` is an AxiosError
+        console.error("Login Axios error:", error.message);
+        setShowError(true);
+        setErrorMessage(
+          "Login error: " + (error.response?.data?.message || error.message)
+        );
+      } else if (error instanceof Error) {
+        // This is a generic error
+        console.error("Login error:", error.message);
+        setShowError(true);
+        setErrorMessage("Login error: " + error.message);
+      } else {
+        // Unknown error type
+        console.error("Login error:", error);
+        setShowError(true);
+        setErrorMessage("An unknown error occurred.");
+      }
     }
   };
 
@@ -82,14 +97,14 @@ const UserDataForm = () => {
   const styles = {
     container: {
       display: "flex",
-      flexDirection: "column",
+      flexDirection: "column" as const,
       alignItems: "center",
       justifyContent: "center",
       height: "100vh",
     },
     form: {
       display: "flex",
-      flexDirection: "column",
+      flexDirection: "column" as const,
       width: "300px",
     },
     input: {
