@@ -26,6 +26,7 @@ This project is a Shopify app built using the MERN stack (MongoDB, Express.js, R
    cd src/db
    node Auth.js
    node Collection.js
+   ( Must check your All DB Connection and Make the Same DM in Your Mongos Just Go Throw these 2 Files )
    ```
 
 2. **Start the backend server:**
