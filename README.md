@@ -1,30 +1,73 @@
-# React + TypeScript + Vite
+# Shopify
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a Shopify app built using the MERN stack (MongoDB, Express.js, React, Node.js) with Vite for front-end tooling. The app interacts with the Shopify API to manage products, allowing users to view, create, update, and delete products in their Shopify store.
 
-Currently, two official plugins are available:
+# Project Setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. **Clone the repository:**
 
-## Expanding the ESLint configuration
+   ```bash
+   git clone https://github.com/PrinceSinghhub/Shopify.git
+   cd Shopify
+   ```
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-- Configure the top-level `parserOptions` property like this:
+## Running the Project
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+1. **Run the database scripts:**
+
+   ```bash
+   cd src/db
+   node Auth.js
+   node Collection.js
+   ```
+
+2. **Start the backend server:**
+
+   ```bash
+   cd ../../
+   npm start
+   ```
+
+3. **Start the frontend development server:**
+   ```bash
+   cd ../src
+   npm run dev
+   ```
+
+## Project Structure
+
+```
+Shopify/
+├── public/
+├── src/
+│   ├── db/
+│   │   ├── Auth.js
+│   │   ├── Collection.js
+│   ├── Pages/
+│   │   ├── 6 .tsx file For the Production Components
+│   ├── App.tsx
+├── .eslintrc.cjs
+├── .gitignore
+├── README.md
+├── index.html
+├── package-lock.json
+├── package.json
+├── tsconfig.json
+├── tsconfig.node.json
+├── vite.config.ts
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+---
+
+# Instruction
+
+This project contains both the frontend and backend, and due to the limitations of free hosting services like Heroku, Vercel, and Netlify, it's not feasible to host the entire project for free. To assist you in setting up and running the project on your local system, I have included in-depth videos and screenshots demonstrating all aspects of my work.
+
+---
+
+## Home Page
