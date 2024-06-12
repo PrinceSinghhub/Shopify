@@ -3,6 +3,7 @@ import AddProductForm from "./AddProductForm";
 import AllProducts from "./AllProducts";
 import UpdateProduct from "./UpdateProduct";
 import DeleteProduct from "./DeleteProduct";
+import SearchProduct from "./SearchProduct";
 
 interface LoginHomePageProps {
   Name: string;
@@ -13,7 +14,8 @@ const LoginHomePage: React.FC<LoginHomePageProps> = ({ Name, Email }) => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [showAllProducts, setShowAllProducts] = useState(false);
   const [showUpdateProduct, setShowUpdateProduct] = useState(false);
-  const [showDeleteProduct, setShowDeleteProduct] = useState(false); // State for DeleteProduct visibility
+  const [showDeleteProduct, setShowDeleteProduct] = useState(false);
+  const [showSearchProduct, setShowSearchProduct] = useState(false); // State for SearchProduct visibility
 
   const handleAddProduct = (product) => {
     fetch("http://localhost:3001/api/storage", {
@@ -85,7 +87,8 @@ const LoginHomePage: React.FC<LoginHomePageProps> = ({ Name, Email }) => {
             setShowAllProducts(true);
             setShowAddForm(false);
             setShowUpdateProduct(false);
-            setShowDeleteProduct(false); // Hide DeleteProduct when showing AllProducts
+            setShowDeleteProduct(false);
+            setShowSearchProduct(false); // Hide SearchProduct when showing AllProducts
           }}
           style={{ margin: "0 10px" }}
         >
@@ -96,7 +99,8 @@ const LoginHomePage: React.FC<LoginHomePageProps> = ({ Name, Email }) => {
             setShowAddForm(!showAddForm);
             setShowAllProducts(false);
             setShowUpdateProduct(false);
-            setShowDeleteProduct(false); // Hide DeleteProduct when toggling AddProductForm
+            setShowDeleteProduct(false);
+            setShowSearchProduct(false); // Hide SearchProduct when toggling AddProductForm
           }}
           style={{ margin: "0 10px" }}
         >
@@ -107,7 +111,8 @@ const LoginHomePage: React.FC<LoginHomePageProps> = ({ Name, Email }) => {
             setShowUpdateProduct(!showUpdateProduct);
             setShowAllProducts(false);
             setShowAddForm(false);
-            setShowDeleteProduct(false); // Hide DeleteProduct when toggling UpdateProduct
+            setShowDeleteProduct(false);
+            setShowSearchProduct(false); // Hide SearchProduct when toggling UpdateProduct
           }}
           style={{ margin: "0 10px" }}
         >
@@ -118,17 +123,31 @@ const LoginHomePage: React.FC<LoginHomePageProps> = ({ Name, Email }) => {
             setShowDeleteProduct(!showDeleteProduct);
             setShowAllProducts(false);
             setShowAddForm(false);
-            setShowUpdateProduct(false); // Hide other components when toggling DeleteProduct
+            setShowUpdateProduct(false);
+            setShowSearchProduct(false); // Hide SearchProduct when toggling DeleteProduct
           }}
           style={{ margin: "0 10px" }}
         >
           {showDeleteProduct ? "Cancel Delete" : "Delete Product"}
+        </button>
+        <button
+          onClick={() => {
+            setShowSearchProduct(!showSearchProduct);
+            setShowAllProducts(false);
+            setShowAddForm(false);
+            setShowUpdateProduct(false);
+            setShowDeleteProduct(false); // Hide other components when toggling SearchProduct
+          }}
+          style={{ margin: "0 10px" }}
+        >
+          {showSearchProduct ? "Cancel Search" : "Search Product"}
         </button>
       </div>
       {showAddForm && <AddProductForm onAdd={handleAddProduct} />}
       {showAllProducts && <AllProducts />}
       {showUpdateProduct && <UpdateProduct />}
       {showDeleteProduct && <DeleteProduct />}
+      {showSearchProduct && <SearchProduct />}
     </>
   );
 };
