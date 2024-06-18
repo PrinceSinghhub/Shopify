@@ -35,6 +35,7 @@ const styles = {
 const SearchProduct = () => {
   const [productId, setProductId] = useState("");
   const [product, setProduct] = useState<{
+    id: number;
     img: string;
     name: string;
     detail: string;
@@ -101,7 +102,7 @@ const SearchProduct = () => {
             }}
           >
             <h4>
-              ID: {product.name} - {product.name}
+              ID: {product.id} Name: {product.name}
             </h4>
             <p>{product.detail}</p>
             <p>Price: ${product.price}</p>
